@@ -1,6 +1,19 @@
+using Microsoft.EntityFrameworkCore;
+using FapSchedule.Models;
+
 var builder = WebApplication.CreateBuilder(args);
+//builder.Services.AddControllersWithViews();
+//builder.Services.AddMvc();  //
+//builder.Services.AddControllers(); // API
+builder.Services.AddRazorPages();
+builder.Services.AddDbContext<FapScheduleContext>(
+    opt => opt.UseSqlServer(builder.Configuration.GetConnectionString("MyConStr"))
+    );
+// Tao ra 1 application theo config o tren
 var app = builder.Build();
 
-app.MapGet("/", () => "Hello World!");
+// Config middleware pipleline
+app.MapRazorPages();
 
+// Run application len
 app.Run();

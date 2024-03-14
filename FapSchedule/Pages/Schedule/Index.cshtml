@@ -1,0 +1,36 @@
+﻿@page
+@model FapSchedule.Pages.Schedule.IndexModel
+@using FapSchedule.Models
+@{
+}
+<table border="1px solid black" height="80px">
+    <tr>
+        <th></th>
+        <th width="150px">Slot 1</th>
+        <th width="150px">Slot 2</th>
+        <th width="150px">Slot 3</th>
+        <th width="150px">Slot 4</th>
+    </tr>
+    @foreach (Room room in Model.rooms)
+    {
+        <tr >
+            <th>@room.RoomName</th>
+            @for (var i = 1; i <= 4; i++)
+            {
+                <td>
+                    @foreach (Class c in Model.classes)
+                    {
+                        @if (c.Room.RoomId == room.RoomId && (c.FirstSlotNavigation.TimeSlotNo == i || c.FirstSlotNavigation.TimeSlotNo == i))
+                        {
+                            <p> @c.ClassName - @c.Subject.SubjectCode</p>
+                            <p>@c.Lecturer.LecturerCode</p>
+                            <p>@c.Room.RoomName</p>
+                            <button>Update</button>
+                            
+                        }
+                    }
+                </td>
+            }
+        </tr>
+    }
+</table>

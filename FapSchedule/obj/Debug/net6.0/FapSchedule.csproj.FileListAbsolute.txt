@@ -58,3 +58,5 @@ C:\Users\DELL\fap-schedule\FapSchedule\obj\Debug\net6.0\refint\FapSchedule.dll
 C:\Users\DELL\fap-schedule\FapSchedule\obj\Debug\net6.0\FapSchedule.pdb
 C:\Users\DELL\fap-schedule\FapSchedule\obj\Debug\net6.0\FapSchedule.genruntimeconfig.cache
 C:\Users\DELL\fap-schedule\FapSchedule\obj\Debug\net6.0\ref\FapSchedule.dll
+C:\Users\DELL\fap-schedule\FapSchedule\obj\Debug\net6.0\FapSchedule.RazorAssemblyInfo.cache
+C:\Users\DELL\fap-schedule\FapSchedule\obj\Debug\net6.0\FapSchedule.RazorAssemblyInfo.cs

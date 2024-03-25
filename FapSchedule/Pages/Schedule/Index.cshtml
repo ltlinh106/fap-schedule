@@ -3,8 +3,7 @@
 @removeTagHelper Microsoft.AspNetCore.Mvc.TagHelpers.OptionTagHelper , Microsoft.AspNetCore.Mvc.TagHelpers
 @model FapSchedule.Pages.Schedule.IndexModel
 @using FapSchedule.Models
-@{
-}
+
 
 
 <form method="post">
@@ -30,22 +29,21 @@
         <option value="Sat" @(Model.weekday.Equals("Sat") ? "selected" : "")>Saturday</option>
         
     </select>
-    <br />
 
     <input type="submit" value="Search" asp-page-handler="Filter" />
 </form>
 <a asp-page="/schedule/add">Create new schedule</a>
-<table border="1px solid black" height="80px">
+<table border="1solid black" height="80px">
     <tr>
-        <th></th>
-        <th width="150px">Slot 1</th>
-        <th width="150px">Slot 2</th>
-        <th width="150px">Slot 3</th>
-        <th width="150px">Slot 4</th>
+        <th style="background-color:darkblue; color:white" width="100px"></th>
+        <th style="background-color:darkblue; color:white" width="150px">Slot 1</th>
+        <th style="background-color:darkblue; color:white" width="150px">Slot 2</th>
+        <th style="background-color:darkblue; color:white" width="150px">Slot 3</th>
+        <th style="background-color:darkblue; color:white" width="150px">Slot 4</th>
     </tr>
     @foreach (Room room in Model.rooms)
     {
-        <tr >
+        <tr style="height:80px">
             <th>@room.RoomName</th>
             @for (var i = 1; i <= 4; i++)
             {
@@ -57,12 +55,17 @@
                             <p> @c.ClassName - @c.Subject.SubjectCode</p>
                             <p>@c.Lecturer.LecturerCode</p>
                             <p>@c.Room.RoomName</p>
-                            <a asp-page="/schedule/update" asp-route-classid="@c.ClassId"> Update </a>
+                            <a asp-page="/schedule/update" asp-route-classid="@c.ClassId" style="margin-right:20px"> Update </a>
+                            <form method="post">
+                                <button type="submit" asp-page-handler="delete" name="classid" value="@c.ClassId">Delete</button>
+                            </form>
                             
                         }
                     }
                 </td>
+
             }
         </tr>
     }
 </table>
+<p style="color:red">@Model.message</p>

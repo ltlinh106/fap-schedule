@@ -1,6 +1,7 @@
 using FapSchedule.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
 
 namespace FapSchedule.Pages.Schedule
 {
@@ -52,7 +53,7 @@ namespace FapSchedule.Pages.Schedule
                 }
                 else
                 {
-                    message = "Cannot update!";
+                    message = "Updated failed";
                 }
             }
             catch (Exception ex)
@@ -90,6 +91,40 @@ namespace FapSchedule.Pages.Schedule
                 return true;
             }
             return false;
+
+
+
+        }
+        public string errorMessageAddedFailed(Class c)
+        {
+            string message = "";
+            Class checkTimeSlotAndRoom = _context.Classes.Include(c => c.Room).Include(c => c.FirstSlotNavigation).Include(c => c.SecondSlotNavigation).FirstOrDefault(cl => cl.RoomId == c.RoomId && (cl.FirstSlot == c.FirstSlot || cl.SecondSlot == c.SecondSlot));
+            if (checkTimeSlotAndRoom != null)
+            {
+                message = "There is a available class at the room " + c.Room.RoomName + " at slot " + c.FirstSlotNavigation.TimeSlotNo + " - " + c.FirstSlotNavigation.WeekDay + " and " + c.FirstSlotNavigation.TimeSlotNo + " - " + c.FirstSlotNavigation.WeekDay;
+            }
+
+            Class checkTimeSlotAndLecturer = _context.Classes.Include(c => c.Lecturer).Include(c => c.FirstSlotNavigation).Include(c => c.SecondSlotNavigation).FirstOrDefault(cl => cl.LecturerId == c.LecturerId && (cl.FirstSlot == c.FirstSlot || cl.SecondSlot == c.SecondSlot));
+            if (checkTimeSlotAndLecturer != null)
+            {
+                message = "The lecturer " + c.Lecturer.LecturerCode + " has a class on " + c.FirstSlotNavigation.TimeSlotNo + " - " + c.FirstSlotNavigation.WeekDay + " and " + c.FirstSlotNavigation.TimeSlotNo + " - " + c.FirstSlotNavigation.WeekDay;
+            }
+            Class checkTimeSlotAndClassName = _context.Classes.Include(c => c.FirstSlotNavigation).Include(c => c.SecondSlotNavigation).FirstOrDefault(cl => cl.ClassName.Equals(c.ClassName) && (cl.FirstSlot == c.FirstSlot || cl.SecondSlot == c.SecondSlot));
+            if (checkTimeSlotAndClassName != null)
+            {
+                message = "The class " + c.ClassName + " has a session on " + c.FirstSlotNavigation.TimeSlotNo + " - " + c.FirstSlotNavigation.WeekDay + " and " + c.FirstSlotNavigation.TimeSlotNo + " - " + c.FirstSlotNavigation.WeekDay;
+            }
+            Class checkSubjectAndClassName = _context.Classes.Include(c => c.Subject).FirstOrDefault(cl => cl.ClassName.Equals(c.ClassName) && (cl.SubjectId == c.SubjectId));
+            if (checkSubjectAndClassName != null)
+            {
+                message = "The class " + c.ClassName + " has a session of the subject " + c.Subject.SubjectName + " in the database. ";
+            }
+            if ((c.FirstSlot == 3 && c.SecondSlot == 2) || (c.FirstSlot == 1 && c.SecondSlot == 4))
+            {
+                message = "The 2 slots must be both in the morning or in the afternoon.";
+            }
+
+            return message;
 
 
 

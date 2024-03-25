@@ -21,16 +21,19 @@ namespace FapSchedule.Pages.Schedule
          { get; set; }
     public List<Room> rooms { get; set; }
         public List<Lecturer> lecturers { get; set; }
+        public string message { get; set; }
 
         public void OnGet()
         {
             weekday = "Mon";
             lecturerID = 0;
+            message = "";
             GetData();
         }
         public void OnPostFilter()
         {
             GetData();
+            message = "";
         }
         public void GetData()
         {
@@ -45,6 +48,25 @@ namespace FapSchedule.Pages.Schedule
             lecturers=_context.Lecturers.ToList();
 
             
+        }
+        public void OnPostDelete(int classId)
+        {
+            Class c =  _context.Classes.FirstOrDefault(c => c.ClassId == classId);
+
+            try
+            {
+                _context.Classes.Remove(c);
+                _context.SaveChanges();
+                message = "Delete successfully!";
+            }
+            catch (Exception ex)
+            {
+                message = "Delete failed!";
+            }
+            weekday = "Mon";
+            lecturerID = 0;
+            GetData();
+           
         }
     }
 }

@@ -1,4 +1,107 @@
 ﻿@page
+@using FapSchedule.Models
 @model FapSchedule.Pages.Schedule.UpdateModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@removeTagHelper Microsoft.AspNetCore.Mvc.TagHelpers.OptionTagHelper , Microsoft.AspNetCore.Mvc.TagHelpers
 @{
 }
+
+<form method="post">
+    <label>Class Name</label>
+    <input type="hidden" value="@Model.updatedClass.ClassId" name="classid" />
+    <input type="text" value="@Model.updatedClass.ClassName" name="classname"/><br />
+    <label>Lecturer</label>
+    <select name="LecturerId">
+        @foreach(Lecturer l in @Model.lecturers)
+        {
+            @if (@l.LecturerId == Model.updatedClass.LecturerId)
+            {
+
+                <option value="@l.LecturerId" selected name="LecturerId">@l.LecturerCode</option>
+            } else
+            {
+                <option value="@l.LecturerId" name="LecturerId">@l.LecturerCode</option>
+            }
+        }
+       
+    </select><br />
+    <label>Subject</label>
+    <select name="SubjectId">
+        @foreach (Subject s in @Model.subjects)
+        {
+            @if (@s.SubjectId == Model.updatedClass.SubjectId)
+            {
+
+                <option value="@s.SubjectId" selected name="SubjectId">@s.SubjectCode</option>
+            }
+            else
+            {
+                <option value="@s.SubjectId" name="SubjectId">@s.SubjectCode</option>
+            }
+        }
+
+    </select><br/>
+    <label>FirstSlot:</label>
+    <select name="FirstSlot">
+        @foreach (TimeSlot t in Model.firstSlot)
+        {
+            <option value="t.TimeSlotId" @(t.TimeSlotId == Model.updatedClass.FirstSlot ? "selected" : "")>Slot @t.TimeSlotNo - @t.WeekDay</option>
+           @* @if (t.TimeSlotId == Model.updatedClass.FirstSlot)
+            {
+
+                <option value="@t.TimeSlotId" selected name="FirstSlot">
+                    Slot @t.TimeSlotNo - @t.WeekDay
+                </option>
+            }
+            else
+            {
+                <option value="@t.TimeSlotId" name="FirstSlot">
+                    Slot @t.TimeSlotNo - @t.WeekDay
+                </option>
+            }*@
+
+        }
+    </select><br/>
+    <label>SecondSlot:</label>
+    <select name="SecondSlot">
+        @foreach (TimeSlot t in Model.secondSlot)
+        {
+
+            <option value="t.TimeSlotId" @(t.TimeSlotId == Model.updatedClass.SecondSlot ? "selected" : "")>Slot @t.TimeSlotNo - @t.WeekDay</option>
+            @*@if (t.TimeSlotId == Model.updatedClass.FirstSlot)
+            {
+
+                <option value="@t.TimeSlotId" selected name="SecondSlot">
+                    Slot @t.TimeSlotNo - @t.WeekDay
+                </option>
+            }
+            else
+            {
+                <option value="@t.TimeSlotId" name="SecondSlot">
+                    Slot @t.TimeSlotNo - @t.WeekDay
+                </option>
+            }*@
+
+        }
+    </select><br/>
+    <label>Room</label>
+    <select name="RoomId">
+        @foreach (Room r in Model.rooms)
+        {
+            <option value="r.RoomId" @(@r.RoomId == Model.updatedClass.RoomId ? "selected" : "")>@r.RoomName</option>
+            @*@if (@r.RoomId == Model.updatedClass.RoomId)
+            {
+
+                <option value="@r.RoomId" selected name="RoomId">@r.RoomName</option>
+            }
+            else
+            {
+                <option value="@r.RoomId" name="RoomId">@r.RoomName</option>
+            }*@
+           
+        }
+
+    </select><br/>
+    <button type="submit" asp-page-handler="update">Update</button>
+</form>
+<p>@Model.message</p>

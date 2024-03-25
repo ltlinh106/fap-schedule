@@ -1,8 +1,40 @@
 ﻿@page
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@removeTagHelper Microsoft.AspNetCore.Mvc.TagHelpers.OptionTagHelper , Microsoft.AspNetCore.Mvc.TagHelpers
 @model FapSchedule.Pages.Schedule.IndexModel
 @using FapSchedule.Models
 @{
 }
+
+
+<form method="post">
+   
+    <label>Lecturer:</label>
+    <select name="LecturerID">
+        <option value="0" @(Model.lecturerID == 0 ? "selected" : "")>All lecturer</option>
+        @foreach (Lecturer l in Model.lecturers)
+        {
+            <option value="@l.LecturerId" @(Model.lecturerID == l.LecturerId ? "selected" : "")>@l.LecturerCode</option>
+        }
+    </select>
+
+    <select name="weekday">
+
+
+
+        <option value="Mon" @(Model.weekday.Equals("Mon") ? "selected" : "")>Monday</option>
+        <option value="Tue" @(Model.weekday.Equals("Tue") ? "selected" : "")>Tuesday</option>
+        <option value="Wed" @(Model.weekday.Equals("Wed") ? "selected" : "")>Wednesday</option>
+        <option value="Thu" @(Model.weekday.Equals("Thu") ? "selected" : "")>Thursday</option>
+        <option value="Fri" @(Model.weekday.Equals("Fri") ? "selected" : "")>Friday</option>
+        <option value="Sat" @(Model.weekday.Equals("Sat") ? "selected" : "")>Saturday</option>
+        
+    </select>
+    <br />
+
+    <input type="submit" value="Search" asp-page-handler="Filter" />
+</form>
+<a asp-page="/schedule/add">Create new schedule</a>
 <table border="1px solid black" height="80px">
     <tr>
         <th></th>
@@ -20,12 +52,12 @@
                 <td>
                     @foreach (Class c in Model.classes)
                     {
-                        @if (c.Room.RoomId == room.RoomId && (c.FirstSlotNavigation.TimeSlotNo == i || c.FirstSlotNavigation.TimeSlotNo == i))
+                        @if (c.Room.RoomId == room.RoomId && ((c.FirstSlotNavigation.TimeSlotNo == i &&c.FirstSlotNavigation.WeekDay==Model.weekday) || (c.SecondSlotNavigation.TimeSlotNo == i&&c.SecondSlotNavigation.WeekDay==Model.weekday)))
                         {
                             <p> @c.ClassName - @c.Subject.SubjectCode</p>
                             <p>@c.Lecturer.LecturerCode</p>
                             <p>@c.Room.RoomName</p>
-                            <button>Update</button>
+                            <a asp-page="/schedule/update" asp-route-classid="@c.ClassId"> Update </a>
                             
                         }
                     }

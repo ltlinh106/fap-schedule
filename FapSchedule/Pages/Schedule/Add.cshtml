@@ -1,0 +1,81 @@
+﻿@page
+@model FapSchedule.Pages.Schedule.AddModel
+@using FapSchedule.Models
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@removeTagHelper Microsoft.AspNetCore.Mvc.TagHelpers.OptionTagHelper , Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+}
+<h4>Import from file</h4>
+<form method="post" enctype="multipart/form-data">
+   
+            <input type="file" id="fUpload" name="file" class="form-control" />
+
+   <input type="submit" asp-page-handler="importfromfile"value="Upload" />
+     
+</form>
+
+<form method="post">
+    <label>Class Name</label>
+  
+    <input type="text" name="classname" /><br/>
+    <label>Lecturer</label>
+    <select name="LecturerId">
+        @foreach (Lecturer l in @Model.lecturers)
+        {
+            
+            
+                <option value="@l.LecturerId" name="LecturerId">@l.LecturerCode</option>
+            
+        }
+
+    </select><br/>
+    <label>Subject</label>
+    <select name="SubjectId">
+        @foreach (Subject s in @Model.subjects)
+        {
+            
+                <option value="@s.SubjectId" name="SubjectId">@s.SubjectCode</option>
+            
+        }
+
+    </select><br/>
+    <label>FirstSlot:</label>
+    <select name="FirstSlot">
+        @foreach (TimeSlot t in Model.firstSlot)
+        {
+            
+            
+                <option value="@t.TimeSlotId" name="FirstSlot">
+                    Slot @t.TimeSlotNo - @t.WeekDay
+                </option>
+            
+
+        }
+    </select><br/>
+    <label>SecondSlot:</label>
+    <select name="SecondSlot">
+        @foreach (TimeSlot t in Model.secondSlot)
+        {
+            
+                <option value="@t.TimeSlotId" name="SecondSlot">
+                    Slot @t.TimeSlotNo - @t.WeekDay
+                </option>
+            
+
+        }
+    </select><br />
+    <label>Room</label>
+    <select name="RoomId">
+        @foreach (Room r in Model.rooms)
+        {
+           
+            
+                <option value="@r.RoomId" name="RoomId">@r.RoomName</option>
+            
+
+        }
+
+    </select><br/>
+    <button type="submit">Create</button>
+</form>
+<p>@Model.message</p>

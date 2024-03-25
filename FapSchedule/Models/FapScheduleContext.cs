@@ -133,7 +133,7 @@ namespace FapSchedule.Models
                 entity.Property(e => e.TimeSlotId).HasColumnName("TimeSlotID");
 
                 entity.Property(e => e.WeekDay)
-                    .HasMaxLength(1)
+                    .HasMaxLength(20)
                     .IsUnicode(false)
                     .IsFixedLength();
             });

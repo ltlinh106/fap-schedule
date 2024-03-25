@@ -60,3 +60,4 @@ C:\Users\DELL\fap-schedule\FapSchedule\obj\Debug\net6.0\FapSchedule.genruntimeco
 C:\Users\DELL\fap-schedule\FapSchedule\obj\Debug\net6.0\ref\FapSchedule.dll
 C:\Users\DELL\fap-schedule\FapSchedule\obj\Debug\net6.0\FapSchedule.RazorAssemblyInfo.cache
 C:\Users\DELL\fap-schedule\FapSchedule\obj\Debug\net6.0\FapSchedule.RazorAssemblyInfo.cs
+C:\Users\DELL\fap-schedule\FapSchedule\bin\Debug\net6.0\CsvHelper.dll
